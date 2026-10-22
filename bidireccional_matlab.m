@@ -1,11 +1,13 @@
 clear
 clc
+close all
 
 PORT = "COM3"; % Cambiar por el puerto correspondiente al ESP32
 BAUD = 9600;
 
 s = serialport(PORT, BAUD);
 pause(2);
+flush(s);
 
 disp("Comunicacion bidireccional iniciada");
 disp("La FPGA regresara el byte recibido mas 1");
