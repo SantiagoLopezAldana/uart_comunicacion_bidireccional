@@ -17,9 +17,9 @@ module top_uart_de10lite(
 	) RX0 (
 		.clk(CLOCK_50),
 		.reset(reset),
-	.rx(UART_RX),
-	.data_out(rx_data),
-	.data_valid(rx_done));
+		.rx(UART_RX),
+		.data_out(rx_data),
+		.data_valid(rx_done));
 
 	uart_tx #(
 		.CLK_FREQ(50000000),
@@ -29,8 +29,8 @@ module top_uart_de10lite(
 		.reset(reset),
 		.tx_start(tx_start),
 		.data_in(tx_data), 
-	.tx(UART_TX),
-	.busy(tx_busy));
+		.tx(UART_TX),
+		.busy(tx_busy));
 	
 	always @(posedge CLOCK_50 or posedge reset) begin
 		if (reset) begin
