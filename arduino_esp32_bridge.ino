@@ -12,12 +12,22 @@ void setup(){
   Serial.println("ESP32 listo: puente PC <-> FPGA");
 }
 void loop(){
-  while(Serial.available()){
-    uint8_t dato = (uint8_t)Serial.read();
-    FPGA_Serial.write(dato);
+  if(Serial.available()){
+    long valor = Serial.parseInt();
+
+    while(Serial.available()){
+      Serial.read();
+    }
+    if(valor > 0 || Serial.peek()=='0'){
+      FPGA_Serial.write((uint8_t)valor);
+      Serial.print("Enviando a FPGA: ");
+      Serial.println(valor);
+    }
   }
-  while(FPGA_Serial.available()){
-    uint8_t dato = (uint8_t)FPGA_Serial.read();
-    Serial.write(dato);
+
+  if(FPGA_Serial.available()){
+    uint8_t respuesta = FPGA_Serial.read();
+    Serial.print("Respuesta: ");
+    Serial.println(respuesta);
   }
 }
