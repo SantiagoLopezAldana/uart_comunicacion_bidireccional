@@ -46,7 +46,7 @@ module top_uart_de10lite(
 	);
 	
 	
-	reg [31:0] data_to_send;
+	reg [31:0] data;
 	reg [2:0] tx_state;//casos de bytes     
 	reg tx_busy_prev;//trabajo anterior        
 	
@@ -64,8 +64,8 @@ module top_uart_de10lite(
 			case (tx_state)
 				2'd0: begin 
 					if (rx_done && !tx_busy) begin
-						data_to_send <= resultado;    
-						tx_data <= resultado[31:24];//Byte 4
+						data <= resultado;    
+						tx_data <= data[31:24];//Byte 4
 						tx_start <= 1'b1;                 
 						tx_state <= 2'd1;                 
 					end
@@ -73,7 +73,7 @@ module top_uart_de10lite(
 				
 				2'd1: begin 
 					if (tx_busy_prev && !tx_busy) begin
-						tx_data <= data_to_send[23:16];//Byte 3
+						tx_data <= data[23:16];//Byte 3
 						tx_start <= 1'b1;
 						tx_state <= 2'd2;
 					end
@@ -81,7 +81,7 @@ module top_uart_de10lite(
 				
 				2'd2: begin 
 					if (tx_busy_prev && !tx_busy) begin
-						tx_data <= data_to_send[15:8];//Byte 2
+						tx_data <= data[15:8];//Byte 2
 						tx_start <= 1'b1;
 						tx_state <= 2'd3;
 					end
@@ -89,7 +89,7 @@ module top_uart_de10lite(
 				
 				2'd3: begin 
 					if (tx_busy_prev && !tx_busy) begin
-						tx_data <= data_to_send[7:0];//Byte 1
+						tx_data <= data[7:0];//Byte 1
 						tx_start <= 1'b1;
 						tx_state <= 2'd0;           
 					end
