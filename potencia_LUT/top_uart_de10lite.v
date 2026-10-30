@@ -58,7 +58,7 @@ module top_uart_de10lite(
 			data_to_send <= 32'd0;
 			tx_busy_prev <= 1'b0;
 		end else begin
-			tx_busy_prev <= tx_busy//estado anterior
+			tx_busy_prev <= tx_busy; +//estado anterior
 			tx_start <= 1'b0;        
 			
 			case (tx_state)
